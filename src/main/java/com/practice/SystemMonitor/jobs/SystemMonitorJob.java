@@ -7,6 +7,13 @@ import oshi.SystemInfo;
 import oshi.hardware.CentralProcessor;
 import oshi.hardware.GlobalMemory;
 
+import java.io.FileWriter;
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 import java.util.logging.Logger;
 
 public class SystemMonitorJob implements Job {
@@ -17,6 +24,9 @@ public class SystemMonitorJob implements Job {
 
     // Store previous ticks as static state
     private static long[] prevTicks = processor.getSystemCpuLoadTicks();
+
+    private static final Path csvPath = Paths.get("system_metrics.csv");
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     @Override
     public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
@@ -36,6 +46,18 @@ public class SystemMonitorJob implements Job {
             logger.info(String.format("Memory: %d MB used / %d MB total",
                     (totalMemory - availableMemory), totalMemory));
 
+            // Write to CSV
+            boolean fileExists = Files.exists(csvPath);
+            long usedMemory = totalMemory - availableMemory;
+            try (FileWriter writer = new FileWriter(csvPath.toFile(), true)) {
+                if (!fileExists) {
+                    writer.append("Timestamp,CPU Load (%),Used Memory (MB),Total Memory (MB)\n");
+                }
+                String now = LocalDateTime.now().format(formatter);
+                writer.append(String.format("%s,%.2f,%d,%d\n", now, cpuLoad, usedMemory, totalMemory));
+            } catch (IOException e) {
+                throw new JobExecutionException("Error Occurred while adding logs to csv file");
+            }
         } catch (InterruptedException e) {
             throw new JobExecutionException("Monitoring job interrupted", e);
         }
