@@ -25,7 +25,7 @@ public class SystemMonitorJob implements Job {
     // Store previous ticks as static state
     private static long[] prevTicks = processor.getSystemCpuLoadTicks();
 
-    private static final Path csvPath = Paths.get("system_metrics.csv");
+    private static final Path csvPath = Paths.get("./logs/system_metrics.csv");
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
 
     @Override

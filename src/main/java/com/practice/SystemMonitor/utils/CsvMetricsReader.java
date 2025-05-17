@@ -15,7 +15,7 @@ import java.util.Deque;
 import java.util.List;
 
 public class CsvMetricsReader {
-    private static final String FILE_PATH = "system_metrics.csv";
+    private static final String FILE_PATH = "./logs/system_metrics.csv";
 
     public static List<SystemMetricsRecord> readFirstNRecords(int n) {
         List<SystemMetricsRecord> records = new ArrayList<>();
