@@ -1,18 +1,18 @@
-# 🖥️ System Resource Monitoring Application (Spring Boot + Quartz)
+#  System Resource Monitoring Application (Spring Boot + Quartz)
 
 This Spring Boot application periodically monitors **CPU** and **Memory usage** on a Windows machine using the **Quartz Scheduler** and logs the information to a CSV file. It also provides REST APIs to fetch monitoring history, download logs, and control scheduling behavior.
 
 ---
 
-## 🚀 Features
+## Features
 
-- ✅ Periodic resource monitoring using Quartz
-- ✅ Captures:
+-  Periodic resource monitoring using Quartz
+-  Captures:
     - CPU usage (%)
     - Memory usage (%)
     - Timestamp of log
-- ✅ Stores logs to `monitoring.csv`
-- ✅ REST APIs to:
+-  Stores logs to `monitoring.csv`
+-  REST APIs to:
     - Get monitoring history (last N records)
     - Download monitoring logs as CSV
     - Configure scheduling interval at runtime
@@ -20,7 +20,7 @@ This Spring Boot application periodically monitors **CPU** and **Memory usage** 
 
 ---
 
-## 🏗️ Tech Stack
+## Tech Stack
 
 - Java 17+
 - Spring Boot
@@ -30,22 +30,22 @@ This Spring Boot application periodically monitors **CPU** and **Memory usage** 
 
 ---
 
-## ⚙️ Setup Instructions
+##  Setup Instructions
 
-### ✅ Prerequisites
+### Prerequisites
 
 - Java 17 or above installed
 - Maven installed
 - Git (optional)
 
-### 📥 Clone the Repository
+### Clone the Repository
 
 ```bash
 git clone https://github.com/your-username/system-monitoring-app.git
 cd system-monitoring-app
 ```
 
-### ▶️ Run the Application
+###  Run the Application
 ```bash
 mvn spring-boot:run
 ```
@@ -54,7 +54,7 @@ mvn spring-boot:run
 mvn clean install
 java -jar target/system-monitoring-app-1.0.0.jar
 ```
-### 📡 API Endpoints
+###  API Endpoints
 | Method | Endpoint                           | Description                               |
 | ------ |------------------------------------| ----------------------------------------- |
 | `GET`  | `/api/monitor/history?n=10`        | Fetch the last `n` monitoring entries     |
@@ -62,7 +62,7 @@ java -jar target/system-monitoring-app-1.0.0.jar
 | `POST` | `/api/monitor/schedule?interval=60` | Set the monitoring interval (in seconds)  |
 | `GET`  | `/api/monitor/metadata`         | View system metadata (CPU, RAM, OS, etc.) |
 
-### 🧾 Sample Log Format
+### Sample Log Format
 ```text
 Timestamp,CPU Usage %,Memory Usage %
 2025-05-17T20:00:30,27.5,68.2
@@ -70,7 +70,7 @@ Timestamp,CPU Usage %,Memory Usage %
 
 ```
 
-### 💡 Use Cases
+###  Use Cases
 - Monitor system load during application testing
 
 - Observe resource trends in dev/QA environments
@@ -79,24 +79,24 @@ Timestamp,CPU Usage %,Memory Usage %
 
 - Lightweight alternative to full monitoring tools
 
-### 🛠️ Possible Enhancements
-- 📊 Frontend dashboard for real-time charts
+###  Possible Enhancements
+-  Frontend dashboard for real-time charts
 
-- 🔔 Email/SMS alerts for high CPU or memory usage
+-  Email/SMS alerts for high CPU or memory usage
 
-- 🗃️ Save logs to a database (e.g., PostgreSQL, MongoDB)
+- Save logs to a database (e.g., PostgreSQL, MongoDB)
 
-- 🔌 Add metrics like disk usage, thread count, JVM stats
+-  Add metrics like disk usage, thread count, JVM stats
 
-- ⏸️ Pause/resume monitoring without restarting app
+-  Pause/resume monitoring without restarting app
 
-### 🙌 Contributing
+###  Contributing
 Pull requests are welcome! If you'd like to add more features or fix bugs, feel free to fork this repo and submit a PR.
 
-### 📝 License
+###  License
 This project is open-source and available under the MIT License.
 
-### 👨‍💻 Author
+###  Author
 Developed by Akshay Gadhave
 
 
