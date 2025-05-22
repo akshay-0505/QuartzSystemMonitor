@@ -1,22 +1,64 @@
-#  System Resource Monitoring Application (Spring Boot + Quartz)
+# Quartz System Monitor
 
-This Spring Boot application periodically monitors **CPU** and **Memory usage** on a Windows machine using the **Quartz Scheduler** and logs the information to a CSV file. It also provides REST APIs to fetch monitoring history, download logs, and control scheduling behavior.
+This is a Spring Boot application that uses the Quartz Scheduler and [OSHI](https://github.com/oshi/oshi) to periodically monitor system metrics like CPU, memory, hardware sensors, network interfaces, and running processes.
+
+GitHub Repo: [QuartzSystemMonitor](https://github.com/akshay-0505/QuartzSystemMonitor)
 
 ---
 
-## Features
+##  Features
 
--  Periodic resource monitoring using Quartz
--  Captures:
-    - CPU usage (%)
-    - Memory usage (%)
-    - Timestamp of log
--  Stores logs to `monitoring.csv`
--  REST APIs to:
-    - Get monitoring history (last N records)
-    - Download monitoring logs as CSV
-    - Configure scheduling interval at runtime
-    - Get system metadata (OS, CPU, architecture, etc.)
+-  **Quartz Scheduler Integration** to periodically log system data
+-  **CSV Logging** of system resource snapshots
+-  **REST APIs** to access real-time and historical monitoring data
+-  **CPU & Memory Monitoring** (usage %, available, total)
+-  **Hardware Monitoring** (CPU temperature, fan speed, voltage)
+-  **Network Monitoring** (bytes sent/received, interface status, IPs)
+-  **Process Monitoring** (CPU %, memory, top N processes)
+-  **Customizable Schedule Interval** for monitoring frequency
+-  **Download Monitoring History** as CSV
+-  **System Metadata API** (OS, architecture, processors, version)
+
+---
+
+## Tech Stack
+
+- Java 17+
+- Spring Boot 3.x
+- Quartz Scheduler
+- OSHI (Operating System and Hardware Info)
+- Maven
+
+---
+## Project Structure
+```bash
+src
+├── main
+│   ├── java
+│   │   └── com.quartz.monitor
+│   │       ├── controller      # REST endpoints
+│   │       ├── service         # Business logic
+│   │       ├── dto             # API response classes
+│   │       ├── job             # Quartz job logic
+│   │       └── config          # Quartz scheduler config
+│   └── resources
+│       └── application.yml
+├── monitor-log.csv             # Monitoring data log file
+```
+---
+
+##  API Endpoints
+
+| Method | Endpoint                                       | Description                                        |
+|--------|------------------------------------------------|----------------------------------------------------|
+| `GET`  | `/api/monitor/history?n=10`                    | Fetch the last `n` monitoring entries              |
+| `GET`  | `/api/monitor/download`                        | Download full monitoring log as a CSV file         |
+| `POST` | `/api/monitor/schedule?interval=60`            | Set monitoring interval in seconds (Quartz job)    |
+| `GET`  | `/api/monitor/metadata`                        | View static system metadata (CPU, OS, RAM, etc.)   |
+| `GET`  | `/api/monitor/hardware`                        | View hardware sensor data (temp, fan, voltage)     |
+| `GET`  | `/api/monitor/network`                         | View network interface stats                       |
+| `GET`  | `/api/monitor/processes?sort=cpu&count=5`      | View top N running processes sorted by CPU/memory  |
+
 
 ---
 
@@ -54,14 +96,6 @@ mvn spring-boot:run
 mvn clean install
 java -jar target/system-monitoring-app-1.0.0.jar
 ```
-###  API Endpoints
-| Method | Endpoint                           | Description                               |
-| ------ |------------------------------------| ----------------------------------------- |
-| `GET`  | `/api/monitor/history?n=10`        | Fetch the last `n` monitoring entries     |
-| `GET`  | `/api/monitor/download`          | Download monitoring log as a CSV file     |
-| `POST` | `/api/monitor/schedule?interval=60` | Set the monitoring interval (in seconds)  |
-| `GET`  | `/api/monitor/metadata`         | View system metadata (CPU, RAM, OS, etc.) |
-
 ### Sample Log Format
 ```text
 Timestamp,CPU Usage %,Memory Usage %
