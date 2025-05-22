@@ -74,12 +74,13 @@ src
 
 ##  Setup Instructions
 
+---
 ### Prerequisites
 
 - Java 17 or above installed
 - Maven installed
 - Git (optional)
-
+---
 ### Clone the Repository
 
 ```bash
@@ -103,7 +104,7 @@ Timestamp,CPU Usage %,Memory Usage %
 2025-05-17T20:01:30,30.1,70.4
 
 ```
-
+---
 ###  Use Cases
 - Monitor system load during application testing
 
@@ -112,7 +113,7 @@ Timestamp,CPU Usage %,Memory Usage %
 - Collect data for system audits
 
 - Lightweight alternative to full monitoring tools
-
+---
 ###  Possible Enhancements
 -  Frontend dashboard for real-time charts
 
@@ -123,15 +124,18 @@ Timestamp,CPU Usage %,Memory Usage %
 -  Add metrics like disk usage, thread count, JVM stats
 
 -  Pause/resume monitoring without restarting app
+---
 
 ###  Contributing
 Pull requests are welcome! If you'd like to add more features or fix bugs, feel free to fork this repo and submit a PR.
 
+---
 ###  License
 This project is open-source and available under the MIT License.
 
+---
 ###  Author
-Developed by Akshay Gadhave
+Developed by [Akshay Gadhave](https://github.com/akshay-0505)
 
 
 
