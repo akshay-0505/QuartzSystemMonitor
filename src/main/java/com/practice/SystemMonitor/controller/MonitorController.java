@@ -4,6 +4,7 @@ import com.practice.SystemMonitor.model.*;
 import com.practice.SystemMonitor.services.HardwareMonitoringService;
 import com.practice.SystemMonitor.services.MonitoringSchedulerService;
 import com.practice.SystemMonitor.services.NetworkMonitoringService;
+import com.practice.SystemMonitor.services.ProcessMonitoringService;
 import com.practice.SystemMonitor.utils.CsvMetricsReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -24,6 +25,8 @@ public class MonitorController {
     private HardwareMonitoringService hardwareMonitoringService;
     @Autowired
     private NetworkMonitoringService networkMonitoringService;
+    @Autowired
+    private ProcessMonitoringService processMonitoringService;
 
     @GetMapping("/history")
     public List<SystemMetricsRecord> getMonitoringHistory(@RequestParam(defaultValue = "10") int n) {
@@ -60,7 +63,7 @@ public class MonitorController {
 
     @GetMapping("/top-processes")
     public ResponseEntity<List<ProcessInfo>> getTopProcesses(@RequestParam(defaultValue = "5") int n) {
-        return ResponseEntity.ok(monitoringSchedulerService.getTopProcesses(n));
+        return ResponseEntity.ok(processMonitoringService.getTopProcesses(n));
     }
 
     @GetMapping("/hardware")
@@ -73,7 +76,7 @@ public class MonitorController {
         return networkMonitoringService.getNetworkStats();
     }
 
-    @GetMapping("/api/monitor/processes")
+    @GetMapping("/processes")
     public List<ProcessInfo> getTopProcesses(
             @RequestParam(defaultValue = "cpu") String sort,
             @RequestParam(defaultValue = "10") int count

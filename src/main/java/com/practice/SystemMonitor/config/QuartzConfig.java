@@ -4,6 +4,7 @@ import com.practice.SystemMonitor.jobs.SystemMonitorJob;
 import com.practice.SystemMonitor.services.HardwareMonitoringService;
 import com.practice.SystemMonitor.services.MonitoringSchedulerService;
 import com.practice.SystemMonitor.services.NetworkMonitoringService;
+import com.practice.SystemMonitor.services.ProcessMonitoringService;
 import org.quartz.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -49,8 +50,13 @@ public class QuartzConfig {
     }
 
     @Bean
-    NetworkMonitoringService createNetworkMonitoringService() {
+    public NetworkMonitoringService createNetworkMonitoringService() {
         return new NetworkMonitoringService();
+    }
+
+    @Bean
+    public ProcessMonitoringService createProcessMonitoringService() {
+        return new ProcessMonitoringService();
     }
 
     @Bean
