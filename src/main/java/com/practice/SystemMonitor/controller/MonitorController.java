@@ -1,9 +1,9 @@
 package com.practice.SystemMonitor.controller;
 
-import com.practice.SystemMonitor.model.MetricsStats;
-import com.practice.SystemMonitor.model.ProcessInfo;
-import com.practice.SystemMonitor.model.SystemMetricsRecord;
+import com.practice.SystemMonitor.model.*;
+import com.practice.SystemMonitor.services.HardwareMonitoringService;
 import com.practice.SystemMonitor.services.MonitoringSchedulerService;
+import com.practice.SystemMonitor.services.NetworkMonitoringService;
 import com.practice.SystemMonitor.utils.CsvMetricsReader;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +20,10 @@ public class MonitorController {
 
     @Autowired
     private MonitoringSchedulerService monitoringSchedulerService;
+    @Autowired
+    private HardwareMonitoringService hardwareMonitoringService;
+    @Autowired
+    private NetworkMonitoringService networkMonitoringService;
 
     @GetMapping("/history")
     public List<SystemMetricsRecord> getMonitoringHistory(@RequestParam(defaultValue = "10") int n) {
@@ -57,6 +61,24 @@ public class MonitorController {
     @GetMapping("/top-processes")
     public ResponseEntity<List<ProcessInfo>> getTopProcesses(@RequestParam(defaultValue = "5") int n) {
         return ResponseEntity.ok(monitoringSchedulerService.getTopProcesses(n));
+    }
+
+    @GetMapping("/hardware")
+    public HardwareInfo getHardwareStats() {
+        return hardwareMonitoringService.getHardwareInfo();
+    }
+
+    @GetMapping("/network")
+    public List<NetworkStats> getNetworkStats() {
+        return networkMonitoringService.getNetworkStats();
+    }
+
+    @GetMapping("/api/monitor/processes")
+    public List<ProcessInfo> getTopProcesses(
+            @RequestParam(defaultValue = "cpu") String sort,
+            @RequestParam(defaultValue = "10") int count
+    ) {
+        return processMonitoringService.getTopProcesses(sort, count);
     }
 
 

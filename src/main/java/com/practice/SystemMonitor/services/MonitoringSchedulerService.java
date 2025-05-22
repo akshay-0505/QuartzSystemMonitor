@@ -17,6 +17,8 @@ import java.util.stream.Collectors;
 public class MonitoringSchedulerService {
     @Autowired
     private SchedulerFactoryBean schedulerFactoryBean;
+    @Autowired
+    private SystemInfo systemInfo;
 
     public void scheduleJob(int intervalInSeconds) throws SchedulerException {
         Scheduler scheduler = schedulerFactoryBean.getScheduler();
@@ -52,7 +54,6 @@ public class MonitoringSchedulerService {
     }
 
     public List<ProcessInfo> getTopProcesses(int count) {
-        final SystemInfo systemInfo = new SystemInfo();
         OperatingSystem os = systemInfo.getOperatingSystem();
         List<OSProcess> processes = os.getProcesses();
 

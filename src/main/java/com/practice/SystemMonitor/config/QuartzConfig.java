@@ -1,11 +1,14 @@
 package com.practice.SystemMonitor.config;
 
 import com.practice.SystemMonitor.jobs.SystemMonitorJob;
+import com.practice.SystemMonitor.services.HardwareMonitoringService;
 import com.practice.SystemMonitor.services.MonitoringSchedulerService;
+import com.practice.SystemMonitor.services.NetworkMonitoringService;
 import org.quartz.*;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.quartz.SchedulerFactoryBean;
+import oshi.SystemInfo;
 
 @Configuration
 public class QuartzConfig {
@@ -36,7 +39,22 @@ public class QuartzConfig {
     }
 
     @Bean
-    public MonitoringSchedulerService createMonitoringSchedulerService(){
+    public MonitoringSchedulerService createMonitoringSchedulerService() {
         return new MonitoringSchedulerService();
+    }
+
+    @Bean
+    public HardwareMonitoringService createHardwareMonitoringService() {
+        return new HardwareMonitoringService(getSystemInfoInstance());
+    }
+
+    @Bean
+    NetworkMonitoringService createNetworkMonitoringService() {
+        return new NetworkMonitoringService();
+    }
+
+    @Bean
+    public SystemInfo getSystemInfoInstance() {
+        return new SystemInfo();
     }
 }
