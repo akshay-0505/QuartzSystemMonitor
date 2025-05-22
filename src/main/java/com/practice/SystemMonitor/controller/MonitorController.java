@@ -1,8 +1,12 @@
 package com.practice.SystemMonitor.controller;
 
 import com.practice.SystemMonitor.model.MetricsStats;
+import com.practice.SystemMonitor.model.ProcessInfo;
 import com.practice.SystemMonitor.model.SystemMetricsRecord;
+import com.practice.SystemMonitor.services.MonitoringSchedulerService;
 import com.practice.SystemMonitor.utils.CsvMetricsReader;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -13,6 +17,9 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/monitor")
 public class MonitorController {
+
+    @Autowired
+    private MonitoringSchedulerService monitoringSchedulerService;
 
     @GetMapping("/history")
     public List<SystemMetricsRecord> getMonitoringHistory(@RequestParam(defaultValue = "10") int n) {
@@ -46,5 +53,11 @@ public class MonitorController {
 
         return stats;
     }
+
+    @GetMapping("/top-processes")
+    public ResponseEntity<List<ProcessInfo>> getTopProcesses(@RequestParam(defaultValue = "5") int n) {
+        return ResponseEntity.ok(monitoringSchedulerService.getTopProcesses(n));
+    }
+
 
 }
